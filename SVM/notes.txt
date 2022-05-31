@@ -1,0 +1,4 @@
+
+
+See https://stackabuse.com/implementing-svm-and-kernel-svm-with-pythons-scikit-learn/
+for basic SVM implementation in python

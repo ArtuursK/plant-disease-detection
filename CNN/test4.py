@@ -44,31 +44,35 @@ validation_data_norm = validation_data.map(lambda x, y: (norm_layer(x), y))
 image_batch, labels_batch = next(iter(training_data_norm))
 
 # kerel_size - how big is the filters (3x3 in this case)
-model_3 = keras.models.Sequential([
+# pooling layer
+model_4 = keras.models.Sequential([
     Conv2D(filters=10,
            kernel_size=3,
            activation="relu",
            input_shape=(256, 256, 3)),
+    MaxPooling2D(pool_size=2, padding="valid"),
     Conv2D(filters=10,
            kernel_size=3,
            activation="relu"),
+    MaxPooling2D(),
     Conv2D(filters=10,
            kernel_size=3,
            activation="relu"),
+    MaxPooling2D(),
     Flatten(),
     Dense(1, activation="sigmoid")
 ])
-model_3.compile(loss="binary_crossentropy",
+model_4.compile(loss="binary_crossentropy",
                 optimizer=keras.optimizers.Adam(),
                 metrics=["accuracy"])
 
-history_3 = model_3.fit(training_data_norm,
+history_4 = model_4.fit(training_data_norm,
                       epochs=10,
                       steps_per_epoch=len(training_data_norm),
                       validation_data=validation_data_norm,
                       validation_steps=len(validation_data_norm))
 
-pd.DataFrame(history_3.history).plot(figsize=(20, 10))
+pd.DataFrame(history_4.history).plot(figsize=(20, 10))
 plt.show()
 
 

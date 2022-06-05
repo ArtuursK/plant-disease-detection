@@ -16,6 +16,9 @@ def preprocess(inputPath, outputPath):
         hsv_img = cv2.cvtColor(rgb_img, cv2.COLOR_RGB2HSV)
 
         # Define the Color Range to be Detected
+        #light_green = (40, 40, 40)
+        #dark_green = (70, 255, 255)
+        # use (40, 40,40) ~ (70, 255,255) in hsv to find the green
         light_green = (40, 40, 40)
         dark_green = (70, 255, 255)
         mask = cv2.inRange(hsv_img, light_green, dark_green)
@@ -46,3 +49,5 @@ preprocess(inputPath, outputPath)
 
 
 
+# References
+# https://machinelearningknowledge.ai/image-segmentation-in-python-opencv/

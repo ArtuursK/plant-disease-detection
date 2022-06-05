@@ -20,9 +20,9 @@ class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck']
 
 def show():
-    plt.figure(figsize=(10,10))
+    plt.figure(figsize=(10, 10))
     for i in range(16):
-        plt.subplot(4,4,i+1)
+        plt.subplot(4, 4, i+1)
         plt.xticks([])
         plt.yticks([])
         plt.grid(False)
@@ -61,7 +61,7 @@ model.fit(train_images, train_labels, epochs=epochs,
           batch_size=batch_size, verbose=2)
 
 # evaulate
-model.evaluate(test_images,  test_labels, batch_size=batch_size, verbose=2)
+model.evaluate(test_images, test_labels, batch_size=batch_size, verbose=2)
 
 
 ### REF:

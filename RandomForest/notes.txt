@@ -1,0 +1,7 @@
+
+
+
+https://www.analyticsvidhya.com/blog/2022/01/image-classification-using-machine-learning/
+
+
+https://www.datacamp.com/tutorial/random-forests-classifier-python

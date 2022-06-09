@@ -24,7 +24,7 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
 
-data_dir = "../Healthy_n_Unhealthy_4_Training"
+data_dir = "../Healthy_n_Unhealthy_4_Training_CM"
 training_data = keras.utils.image_dataset_from_directory(
     data_dir, validation_split=0.2, subset="training",
     batch_size=32, image_size=(256, 256), seed=66)

@@ -10,10 +10,24 @@
 
 
 
-
-
+CNN examples
+https://www.geeksforgeeks.org/python-image-classification-using-keras/
+https://stackabuse.com/image-recognition-in-python-with-tensorflow-and-keras/
 CNN visual explanation:
 https://poloclub.github.io/cnn-explainer/
+
+
+
+#SVM implementation in python
+#https://www.youtube.com/watch?v=0rjlviOQlbc&ab_channel=Md.IqbalHossain
+
+
+crowdsourcing marketplace
+https://www.mturk.com/
+
+
+
+
 
 
 

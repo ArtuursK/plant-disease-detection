@@ -1,20 +1,11 @@
 
-import numpy as np
 import pandas as pd
 
-import matplotlib.pyplot as plt
-from matplotlib.image import imread
-
-import os, random
-from os import listdir
-
+import os
 import cv2
 
-from keras.preprocessing import image
-from keras.preprocessing.image import img_to_array, array_to_img
-from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Activation, Flatten, Dropout, Dense
+from keras.layers import Flatten, Dense
 
 import tensorflow.keras as keras
 from tensorflow.python.keras.utils.np_utils import to_categorical
@@ -24,7 +15,7 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
 
-data_dir = "../../Healthy_n_Unhealthy_4_Training_CM"
+data_dir = "../Healthy_n_Unhealthy_4_Training_CM"
 training_data = keras.utils.image_dataset_from_directory(
     data_dir, validation_split=0.2, subset="training",
     batch_size=32, image_size=(256, 256), seed=66)
@@ -41,7 +32,7 @@ training_data_norm = training_data.map(lambda x, y: (norm_layer(x), y))
 validation_data_norm = validation_data.map(lambda x, y: (norm_layer(x), y))
 image_batch, labels_batch = next(iter(training_data_norm))
 
-# kerel_size - how big is the filters (3x3 in this case)
+# kernel_size - how big is the filters (3x3 in this case)
 # pooling layer
 model_5 = keras.models.Sequential([
     Conv2D(filters=10,
@@ -80,7 +71,7 @@ pd.DataFrame(history_5.history).plot(figsize=(20, 10))
 # OPTIONAL - Test a random sample image that the model has not seen:
 # Read in image
 #plantImage = tf.io.read_file("../HealthyLeaves/HealthyLeavesTestPreprocessed/O_Healthy_IMG_2062.JPG")
-plantImage = tf.io.read_file("../../HealthyLeaves/HealthyLeavesTrainPreprocessed/O_Healthy_20210208_102309.jpg")
+plantImage = tf.io.read_file("../HealthyLeaves/HealthyLeavesTrainPreprocessed/O_Healthy_20210208_102309.jpg")
 
 # Turn file into a tensor
 plantImage = tf.image.decode_image(plantImage)
@@ -93,6 +84,8 @@ plantImage = plantImage / 255
 
 # Tells us how likely the image belongs to a class in our model
 prediction = model_5.predict(tf.expand_dims(plantImage, axis=0))
+print(f"tf.round(prediction): {tf.round(prediction)}")
+
 predicted_class = class_names[int(tf.round(prediction))]
 print(f"The predicted_class is : {predicted_class} with prediction: {prediction}")
 

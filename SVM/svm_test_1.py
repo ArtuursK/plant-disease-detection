@@ -10,7 +10,6 @@ import pickle
 import cv2
 
 datadir = "../Healthy_n_Unhealthy_4_Training_CM"
-#datadir = "../Healthy_n_Unhealthy_4_Training_OG"
 
 #NOTE : Please enter Category Names same as folder name
 categories=['HealthyLeaves', 'UnhealthyLeaves']
@@ -21,7 +20,8 @@ for category in categories:
     print(f'loading category : {category}')
     path=os.path.join(datadir, category)
     for img in os.listdir(path):
-        img_array=cv2.imread(os.path.join(path, img))
+        img_array = cv2.imread(os.path.join(path, img))
+        img_array = cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB)
         flat_data_arr.append(img_array.flatten())
         target_arr.append(categories.index(category))
     print(f'loaded category:{category} successfully')

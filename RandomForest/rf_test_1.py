@@ -22,6 +22,7 @@ for category in categories:
     path = os.path.join(datadir, category)
     for img in os.listdir(path):
         img_array = cv2.imread(os.path.join(path, img))
+        img_array = cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB)
         flat_data_arr.append(img_array.flatten())
         target_arr.append(categories.index(category))
     print(f'loaded category:{category} successfully')
@@ -50,7 +51,7 @@ print(f"y_test.shape: {y_test.shape}")
 # and x_test by 255.0 for the test dataset.
 # This is essential to maintain the pixels of all the images within a uniform range.
 
-# Normalization
+# Normalize: 0,255 -> 0,1 an essential math trick for better performance
 x_train = x_train/255.0
 x_test = x_test/255.0
 

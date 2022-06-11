@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 cifar10 = keras.datasets.cifar10
 
 (train_images, train_labels), (test_images, test_labels) = cifar10.load_data()
+#(x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
 
 print(train_images.shape) # 50000, 32, 32, 3
 

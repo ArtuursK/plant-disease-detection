@@ -69,7 +69,7 @@ model.evaluate(x_test, y_test, batch_size = batch_size, verbose = 2)
 
 # OPTIONAL - Test a random sample image that the model has not seen:
 # Read in image
-plantImage = tf.io.read_file("../HealthyLeaves/HealthyLeavesTrainPreprocessed/O_Healthy_20210208_102309.jpg")
+plantImage = tf.io.read_file("../../HealthyLeaves/HealthyLeavesTrainPreprocessed/O_Healthy_20210208_102309.jpg")
 
 # Turn file into a tensor
 plantImage = tf.image.decode_image(plantImage)

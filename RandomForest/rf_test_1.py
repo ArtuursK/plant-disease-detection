@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import pickle
 import cv2
+import time
 
 
 datadir = "../Healthy_n_Unhealthy_4_Training_CM"
@@ -58,7 +59,10 @@ x_test = x_test/255.0
 # Implementing a Random Forest Classifier
 model = RandomForestClassifier()
 
+start = time.time()
 model.fit(x_train, y_train)
+end = time.time()
+print(f"Elapsed training time: {end - start} seconds")
 y_pred = model.predict(x_test)
 print("The predicted Data is :")
 print(y_pred)

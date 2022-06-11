@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import pickle
 import cv2
+import time
 
 datadir = "../Healthy_n_Unhealthy_4_Training_CM"
 
@@ -42,7 +43,11 @@ param_grid={'C':[0.1, 1, 10, 100], 'gamma':[0.0001, 0.001, 0.1, 1], 'kernel':['r
 svc=svm.SVC(probability=True)
 print("The training of the model is started, please wait for while as it may take few minutes to complete")
 model = GridSearchCV(svc, param_grid)
+
+start = time.time()
 model.fit(x_train, y_train)
+end = time.time()
+print(f"Elapsed training time: {end - start} seconds")
 print('The Model is trained with the given images')
 print(model.best_params_)
 

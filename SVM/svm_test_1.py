@@ -68,7 +68,7 @@ print("Confusion matrix:")
 print(confusion_matrix(y_pred, y_test))
 
 
-whereToSaveModel = '../SavedModels/SVM_Model_3'
+whereToSaveModel = '../SavedModels/SVM_Model_1'
 if not os.path.exists(whereToSaveModel):
     os.makedirs(whereToSaveModel)
 

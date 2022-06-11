@@ -4,6 +4,7 @@ from tensorflow import keras
 from sklearn.model_selection import train_test_split
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Flatten, Dense
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 import time
 import pandas as pd
@@ -55,13 +56,14 @@ model.add(Conv2D(filters=10, kernel_size=3, activation="relu"))
 model.add(MaxPooling2D())
 model.add(Flatten())
 model.add(Dense(1, activation='sigmoid'))
+#model.add(Dense(1, activation='softmax'))
 
 model.compile(loss="binary_crossentropy",
               optimizer=keras.optimizers.Adam(),
               metrics=["accuracy"])
 
 batch_size = 20
-epochs = 10
+epochs = 5
 
 start = time.time()
 modResult = model.fit(x_train, y_train, epochs = epochs, verbose=2)
@@ -70,9 +72,25 @@ print(f"Elapsed training time: {end - start} seconds")
 #pd.DataFrame(modResult.history).plot(figsize=(20, 10))
 #plt.show()
 
-# evaulate
-print("Model evaluation:")
-model.evaluate(x_test, y_test, verbose=2)
+# evaluation
+# print("Model evaluation:")
+# model.evaluate(x_test, y_test, batch_size=batch_size, verbose=2)
+
+y_pred = model.predict(x_test, batch_size=batch_size)
+y_pred = np.round(y_pred)
+print("The predicted Data is :")
+print(y_pred)
+
+print("The actual data is:")
+print(np.array(y_test))
+
+print(f"The model is {accuracy_score(y_pred, y_test) * 100}% accurate")
+
+print("Classification report:")
+print(classification_report(y_pred, y_test))
+
+print("Confusion matrix:")
+print(confusion_matrix(y_pred, y_test))
 
 whereToSaveModel = '../SavedModels/CNN_Model_3'
 if not os.path.exists(whereToSaveModel):

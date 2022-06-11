@@ -26,7 +26,7 @@ from sklearn.model_selection import train_test_split
 
 healthyPlantPath = os.path.dirname(os.path.abspath(__file__)) + "/HealthyLeaves/HealthyLeavesTrain/"
 
-data_dir = "../HealthyUnhealthyLeavesTrain"
+data_dir = "../../bckp/HealthyUnhealthyLeavesTrain"
 training_data = keras.utils.image_dataset_from_directory(
     data_dir, validation_split=0.2, subset="training",
     batch_size=32, image_size=(256,256), seed=66)

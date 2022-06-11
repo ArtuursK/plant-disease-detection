@@ -5,7 +5,7 @@ from sklearn.model_selection import GridSearchCV
 import os
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import pickle
 import cv2
 
@@ -46,14 +46,22 @@ model.fit(x_train, y_train)
 print('The Model is trained with the given images')
 print(model.best_params_)
 
-y_pred=model.predict(x_test)
+y_pred = model.predict(x_test)
 print("The predicted Data is :")
 print(y_pred)
 
 print("The actual data is:")
 print(np.array(y_test))
 
+# Now, evaluate the model with the test images by obtaining its classification report, confusion matrix, and accuracy score
 print(f"The model is {accuracy_score(y_pred, y_test) * 100}% accurate")
+
+print("Classification report:")
+print(classification_report(y_pred, y_test))
+
+print("Confusion matrix:")
+print(confusion_matrix(y_pred, y_test))
+
 
 pickle.dump(model, open("../SavedModels/SVM_Model_3/model.p", "wb"))
 print("Model was saved successfully")

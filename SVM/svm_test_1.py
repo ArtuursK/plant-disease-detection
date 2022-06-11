@@ -63,7 +63,11 @@ print("Confusion matrix:")
 print(confusion_matrix(y_pred, y_test))
 
 
-pickle.dump(model, open("../SavedModels/SVM_Model_3/model.p", "wb"))
+whereToSaveModel = '../SavedModels/SVM_Model_3'
+if not os.path.exists(whereToSaveModel):
+    os.makedirs(whereToSaveModel)
+
+pickle.dump(model, open(whereToSaveModel + "/model.p", "wb"))
 print("Model was saved successfully")
 
 # References:

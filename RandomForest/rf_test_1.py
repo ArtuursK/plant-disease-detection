@@ -74,6 +74,13 @@ print(classification_report(y_pred, y_test))
 print("Confusion matrix:")
 print(confusion_matrix(y_pred, y_test))
 
+whereToSaveModel = '../SavedModels/RF_Model_1'
+if not os.path.exists(whereToSaveModel):
+    os.makedirs(whereToSaveModel)
+
+pickle.dump(model, open(whereToSaveModel + "/model.p", "wb"))
+print("Model was saved successfully")
+
 
 
 # OPTIONAL - test with random image:

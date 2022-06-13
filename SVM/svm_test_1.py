@@ -1,11 +1,13 @@
 
-import pandas as pd
 from sklearn import svm
 from sklearn.model_selection import GridSearchCV
-import os
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from datetime import datetime
+
+import pandas as pd
+import os
+import numpy as np
 import pickle
 import cv2
 import time
@@ -36,7 +38,7 @@ print(df)
 #Splitting the data into training and testing data
 x=df.iloc[:, :-1]
 y=df.iloc[:, -1]
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=77, stratify=y)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, stratify=y)
 print('Splitted Successfully')
 
 param_grid={'C':[0.1, 1, 10, 100], 'gamma':[0.0001, 0.001, 0.1, 1], 'kernel':['rbf', 'poly']} #https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html
@@ -47,7 +49,8 @@ model = GridSearchCV(svc, param_grid)
 start = time.time()
 model.fit(x_train, y_train)
 end = time.time()
-print(f"Elapsed training time: {end - start} seconds")
+trainingduration = end - start
+print(f"Elapsed training time: {trainingduration} seconds")
 print('The Model is trained with the given images')
 print(model.best_params_)
 
@@ -63,6 +66,25 @@ print(f"The model is {accuracy_score(y_pred, y_test) * 100}% accurate")
 
 print("Classification report:")
 print(classification_report(y_pred, y_test))
+
+### For saving experiment results ################
+clasifReport = classification_report(y_pred, y_test, output_dict=True)
+print(clasifReport)
+
+print(f"overall accuracy: {clasifReport['accuracy'] * 100}")
+overallAccuracy = clasifReport['accuracy'] * 100
+print(f"sensitivity (jutīgums): {clasifReport['0']['precision']}")
+sensitivity = clasifReport['0']['precision']
+print(f"specificity (specifiskums): {clasifReport['1']['precision']}")
+specificity = clasifReport['1']['precision']
+print(f"precision (precīzumspēja): {clasifReport['0']['recall']}")
+precision = clasifReport['0']['recall']
+print(f"NPV (Negatīvo atklāšanas biežums): {clasifReport['1']['recall']}")
+npv = clasifReport['1']['recall']
+
+with open("../Experiments/SVM_results.csv", "a") as expfile:
+    expfile.write(f"{datetime.now()},{overallAccuracy},{sensitivity},{specificity},{precision},{npv},{trainingduration}\n")
+##################################################
 
 print("Confusion matrix:")
 print(confusion_matrix(y_pred, y_test))

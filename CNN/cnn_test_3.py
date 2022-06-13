@@ -2,14 +2,15 @@
 
 from tensorflow import keras
 from sklearn.model_selection import train_test_split
+import os
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Flatten, Dense
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from datetime import datetime
 
 import time
 import pandas as pd
 import cv2
-import os
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -35,7 +36,7 @@ allImages = np.array(train_imgs)
 target = np.array(target_arr)
 print(allImages.shape) # (109, 256, 256, 3)
 
-x_train, x_test, y_train, y_test = train_test_split(allImages, target, test_size=0.20, random_state=77, stratify=target)
+x_train, x_test, y_train, y_test = train_test_split(allImages, target, test_size=0.20, stratify=target)
 print(f"x_train.shape {x_train.shape}")
 print(f"x_test.shape {x_test.shape}")
 print('Splitted Successfully')
@@ -68,7 +69,8 @@ epochs = 5
 start = time.time()
 modResult = model.fit(x_train, y_train, epochs = epochs, verbose=2)
 end = time.time()
-print(f"Elapsed training time: {end - start} seconds")
+trainingduration = end - start
+print(f"Elapsed training time: {trainingduration} seconds")
 #pd.DataFrame(modResult.history).plot(figsize=(20, 10))
 #plt.show()
 
@@ -88,6 +90,25 @@ print(f"The model is {accuracy_score(y_pred, y_test) * 100}% accurate")
 
 print("Classification report:")
 print(classification_report(y_pred, y_test))
+
+### For saving experiment results ################
+clasifReport = classification_report(y_pred, y_test, output_dict=True)
+print(clasifReport)
+
+print(f"overall accuracy: {clasifReport['accuracy'] * 100}")
+overallAccuracy = clasifReport['accuracy'] * 100
+print(f"sensitivity (jutīgums): {clasifReport['0.0']['precision']}")
+sensitivity = clasifReport['0.0']['precision']
+print(f"specificity (specifiskums): {clasifReport['1.0']['precision']}")
+specificity = clasifReport['1.0']['precision']
+print(f"precision (precīzumspēja): {clasifReport['0.0']['recall']}")
+precision = clasifReport['0.0']['recall']
+print(f"NPV (Negatīvo atklāšanas biežums): {clasifReport['1.0']['recall']}")
+npv = clasifReport['1.0']['recall']
+
+with open("../Experiments/CNN_results.csv", "a") as expfile:
+    expfile.write(f"{datetime.now()},{overallAccuracy},{sensitivity},{specificity},{precision},{npv},{trainingduration}\n")
+##################################################
 
 print("Confusion matrix:")
 print(confusion_matrix(y_pred, y_test))

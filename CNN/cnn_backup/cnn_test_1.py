@@ -15,7 +15,7 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
 
-data_dir = "../Healthy_n_Unhealthy_4_Training_CM"
+data_dir = "../../Healthy_n_Unhealthy_4_Training_CM"
 training_data = keras.utils.image_dataset_from_directory(
     data_dir, validation_split=0.2, subset="training",
     batch_size=32, image_size=(256, 256), seed=66)
@@ -71,7 +71,7 @@ pd.DataFrame(history_5.history).plot(figsize=(20, 10))
 # OPTIONAL - Test a random sample image that the model has not seen:
 # Read in image
 #plantImage = tf.io.read_file("../HealthyLeaves/HealthyLeavesTestPreprocessed/O_Healthy_IMG_2062.JPG")
-plantImage = tf.io.read_file("../HealthyLeaves/HealthyLeavesTrainPreprocessed/O_Healthy_20210208_102309.jpg")
+plantImage = tf.io.read_file("../../HealthyLeaves/HealthyLeavesTrainPreprocessed/O_Healthy_20210208_102309.jpg")
 
 # Turn file into a tensor
 plantImage = tf.image.decode_image(plantImage)

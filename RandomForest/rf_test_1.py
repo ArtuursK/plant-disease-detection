@@ -1,15 +1,16 @@
 
 
-import pandas as pd
-import os
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from datetime import datetime
+
 import pickle
 import cv2
 import time
-
+import pandas as pd
+import os
+import numpy as np
 
 datadir = "../Healthy_n_Unhealthy_4_Training_CM"
 
@@ -40,7 +41,8 @@ x=df.iloc[:, :-1]
 #print(f"x: {x}")
 y=df.iloc[:, -1] # classes
 #print(f"y: {y}")
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=77, stratify=y)
+#x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=77, stratify=y)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, stratify=y)
 print('Splitted Successfully')
 print(f"x_train.shape: {x_train.shape}")
 print(f"x_test.shape: {x_test.shape}")
@@ -62,7 +64,8 @@ model = RandomForestClassifier()
 start = time.time()
 model.fit(x_train, y_train)
 end = time.time()
-print(f"Elapsed training time: {end - start} seconds")
+trainingduration = end - start
+print(f"Elapsed training time: {trainingduration} seconds")
 y_pred = model.predict(x_test)
 print("The predicted Data is :")
 print(y_pred)
@@ -71,10 +74,30 @@ print("The actual data is:")
 print(np.array(y_test))
 
 # Now, evaluate the model with the test images by obtaining its classification report, confusion matrix, and accuracy score
-print(f"The model is {accuracy_score(y_pred, y_test) * 100}% accurate")
+final_accuracy = accuracy_score(y_pred, y_test) * 100
+print(f"The model is {final_accuracy}% accurate")
 
 print("Classification report:")
 print(classification_report(y_pred, y_test))
+
+### For saving experiment results ################
+clasifReport = classification_report(y_pred, y_test, output_dict=True)
+print(clasifReport)
+
+print(f"overall accuracy: {clasifReport['accuracy'] * 100}")
+overallAccuracy = clasifReport['accuracy'] * 100
+print(f"sensitivity (jutīgums): {clasifReport['0']['precision']}")
+sensitivity = clasifReport['0']['precision']
+print(f"specificity (specifiskums): {clasifReport['1']['precision']}")
+specificity = clasifReport['1']['precision']
+print(f"precision (precīzumspēja): {clasifReport['0']['recall']}")
+precision = clasifReport['0']['recall']
+print(f"NPV (Negatīvo atklāšanas biežums): {clasifReport['1']['recall']}")
+npv = clasifReport['1']['recall']
+
+with open("../Experiments/RF_results.csv", "a") as expfile:
+    expfile.write(f"{datetime.now()},{overallAccuracy},{sensitivity},{specificity},{precision},{npv},{trainingduration}\n")
+##################################################
 
 print("Confusion matrix:")
 print(confusion_matrix(y_pred, y_test))

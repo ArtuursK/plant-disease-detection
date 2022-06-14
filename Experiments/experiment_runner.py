@@ -1,18 +1,18 @@
 
 import os
 
-numberOfExperiments = 20
+numberOfExperiments = 30
 # Random forest
-# classifierLocation = "../RandomForest/rf_test_1.py"
-# testResultFileLocation = "RF_results.csv"
+classifierLocation = "../RandomForest/rf_test_1.py"
+testResultFileLocation = "RF_results.csv"
 
 # CNN
 # classifierLocation = "../CNN/cnn_test_3.py"
 # testResultFileLocation = "CNN_results.csv"
 
 # SVM
-classifierLocation = "../SVM/svm_test_1.py"
-testResultFileLocation = "SVM_results.csv"
+# classifierLocation = "../SVM/svm_test_1.py"
+# testResultFileLocation = "SVM_results.csv"
 
 
 # clean previous data

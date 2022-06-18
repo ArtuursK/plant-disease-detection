@@ -1,11 +1,10 @@
 
+
+from numpy import mean
+
 import matplotlib.pyplot as plt
 import pandas as pd
-
-from scipy.stats import shapiro
-from scipy.stats import ttest_ind
-from numpy import std
-from numpy import mean
+import numpy as np
 
 randomForestResults = "backup/RF_results.csv"
 cnnResults = "backup/CNN_results.csv"
@@ -15,59 +14,47 @@ rfData = pd.read_csv(randomForestResults)
 cnnData = pd.read_csv(cnnResults)
 svmData = pd.read_csv(svmResults)
 
-# compare:
-# CNN and RF
-# CNN and SVM
-# RF and SVM
+# AVG overall accuracy
+overallRFAccuracy = rfData['overallAccuracy']
+overallCNNAccuracy = cnnData['overallAccuracy']
+overallSVMAccuracy = svmData['overallAccuracy']
 
-# plot accuracy
-plt.plot(rfData['trainingduration'], 'r', label='RandomForest')
-plt.plot(cnnData['trainingduration'], 'b', label='CNN')
-plt.plot(svmData['trainingduration'], 'g', label='SVM')
-plt.ylabel("Kopējā precizitāte")
-plt.xlabel("Klasifikatora numurs")
-plt.legend()
+height = [mean(overallRFAccuracy), mean(overallCNNAccuracy), mean(overallSVMAccuracy)]
+bars = ('RandomForest', 'CNN', 'SVM')
+y_pos = np.arange(len(bars))
+# Create bars
+plt.bar(y_pos, height)
+# Create names on the x-axis
+plt.xticks(y_pos, bars)
+# Show graphic
 plt.show()
 
-def normalityTest(accuracyData):
-    print(f"accuracy mean = {mean(accuracyData)}")
-    print(f"accuracy std = {std(accuracyData)}")
-    plt.hist(accuracyData, color = 'blue', edgecolor = 'black')
-    plt.show()
-    alpha = 0.05
-    print("Shapiro-Wilk test for normality")
-    stat, p = shapiro(accuracyData)
-    print('Statistics=%.3f, p=%.3f' % (stat, p))
-    if p > alpha:
-        print('Sample looks Normaly distributed (Gaussian) (failed to reject H0)')
-    else:
-        print('Sample does not look Gaussian (reject H0)')
-
-print("CNN Normality test:")
-normalityTest(cnnData['overallAccuracy'])
-print("SVM Normality test:")
-normalityTest(svmData['overallAccuracy'])
-print("RandomForest Normality test:")
-normalityTest(rfData['overallAccuracy'])
+# ROC curve (receiver operating characteristic curve) is a graph
+# showing the performance of a classification model at all classification thresholds.
+# This curve plots two parameters: True Positive Rate. False Positive Rate.
 
 
 
 
+# plot trainingduration
+# plt.plot(rfData['trainingduration'], 'r', label='RandomForest')
+# plt.plot(cnnData['trainingduration'], 'b', label='CNN')
+# plt.plot(svmData['trainingduration'], 'g', label='SVM')
+# plt.ylabel("Kopējā precizitāte")
+# plt.xlabel("Klasifikatora numurs")
+# plt.legend()
+# plt.show()
 
-# T-Test compare
-# CNN and SVM and RF
-#H0: mean values are equal.
-# If the Independent t-test results are significant (p-value very very small p<0,05)
-# we can reject the null hypothesis in support of the alternative hypothesis (difference is statistically significant)
 
-# CNN and RF
-# accuracyTTestResult = ttest_ind(cnnData['overallAccuracy'], rfData['overallAccuracy'])
-# print(accuracyTTestResult)
-# if(accuracyTTestResult.pvalue < alpha):
-#     print("CNN accuracy and RF accuracy difference is statistically significant")
-# else:
-#     print("CNN accuracy and RF accuracy difference is not statistically significant. Mean values are equal")
-# print("accuracyTTestResult.pvalue: ", accuracyTTestResult.pvalue)
+
+# References:
+# https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/
+# https://www.statology.org/plot-roc-curve-python/
+
+# https://www.youtube.com/watch?v=4jRBRDbJemM&ab_channel=StatQuestwithJoshStarmer
+
+
+
 
 
 

@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from datetime import datetime
+from sklearn import metrics
 
 import pickle
 import cv2
@@ -11,6 +12,7 @@ import time
 import pandas as pd
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 
 datadir = "../Healthy_n_Unhealthy_4_Training_CM"
 
@@ -122,27 +124,27 @@ for ind, val in enumerate(categories):
     print(f'{val} probability = {probability[0][ind]*100}%')
 print("The predicted image is : " + categories[model.predict(l)[0]])
 
+# OPTIONAL - Plot the ROC and AUC Curves
+y_pred_proba = model.predict_proba(x_test)[::,1]
+fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
+
+#create ROC curve
+plt.plot(fpr,tpr)
+plt.ylabel('True Positive Rate')
+plt.xlabel('False Positive Rate')
+plt.show()
 
 
+y_pred_proba = model.predict_proba(x_test)[::,1]
+fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
+auc = metrics.roc_auc_score(y_test, y_pred_proba)
 
-############################################    TEST    ###################################################################
-# (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
-# print(f"x_train.shape: {x_train.shape}")
-# print(f"x_test.shape: {x_test.shape}")
-# print(f"y_train.shape: {y_train.shape}")
-# print(f"y_test.shape: {y_test.shape}")
-#
-# # Normalization
-# x_train = x_train/255.0
-# x_test = x_test/255.0
-#
-# #sklearn expects i/p to be 2d array-model.fit(x_train,y_train)=>reshape to 2d array
-# nsamples, nx, ny, nrgb = x_train.shape
-# x_train2 = x_train.reshape((nsamples,nx*ny*nrgb))
-# print(f"x_train2.shape: {x_train2.shape}")
-
-
-###############################################################################################################
+#create AUC curve
+plt.plot(fpr,tpr,label="AUC="+str(auc))
+plt.ylabel('True Positive Rate')
+plt.xlabel('False Positive Rate')
+plt.legend(loc=4)
+plt.show()
 
 
 

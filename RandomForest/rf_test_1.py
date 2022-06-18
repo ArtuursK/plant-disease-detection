@@ -60,6 +60,8 @@ x_test = x_test/255.0
 
 # Implementing a Random Forest Classifier
 model = RandomForestClassifier()
+print("RF params:")
+print(model.get_params())
 
 start = time.time()
 model.fit(x_train, y_train)
@@ -159,7 +161,8 @@ print("The predicted image is : " + categories[model.predict(l)[0]])
 
 # https://www.analyticsvidhya.com/blog/2022/01/image-classification-using-machine-learning/
 
-
+# RF parameter tuning
+# https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74
 
 # Notes
 #

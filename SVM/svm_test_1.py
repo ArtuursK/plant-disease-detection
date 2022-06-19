@@ -41,7 +41,8 @@ y=df.iloc[:, -1]
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, stratify=y)
 print('Splitted Successfully')
 
-param_grid={'C':[0.1, 1, 10, 100], 'gamma':[0.0001, 0.001, 0.1, 1], 'kernel':['rbf', 'poly']} #https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html
+#param_grid={'C':[0.1, 1, 10, 100], 'gamma':[0.0001, 0.001, 0.1, 1], 'kernel':['rbf', 'poly']} #https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html
+param_grid={'C':[0.1], 'gamma':[0.0001], 'kernel':['linear']}
 svc=svm.SVC(probability=True)
 print("The training of the model is started, please wait for while as it may take few minutes to complete")
 model = GridSearchCV(svc, param_grid)

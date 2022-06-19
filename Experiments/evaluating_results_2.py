@@ -8,34 +8,110 @@ import numpy as np
 
 randomForestResults = "backup/RF_results.csv"
 cnnResults = "backup/CNN_results.csv"
-svmResults = "backup/SVM_results.csv"
+svmResults = "SVM_results.csv"
 
 rfData = pd.read_csv(randomForestResults)
 cnnData = pd.read_csv(cnnResults)
 svmData = pd.read_csv(svmResults)
 
 # AVG training duration
-height = [mean(rfData['trainingduration']), mean(cnnData['trainingduration']), mean(svmData['trainingduration'])]
-bars = ('RandomForest', 'CNN', 'SVM')
-plt.barh(bars, height)
-for index, value in enumerate(height):
-    plt.text(value, index, str(round(value,2)))
-plt.xlabel('Apmācības laiks s')
-#plt.xlim([0, 100])
-plt.grid(axis='x')
+metric = 'trainingduration'
+avg_overall_accuracy = {
+    'RandomForest': rfData[metric],
+    'CNN': cnnData[metric],
+    'SVM': svmData[metric]
+}
+
+fig, ax = plt.subplots()
+ax.boxplot(avg_overall_accuracy.values(), showmeans=True, meanline=True)
+ax.set_xticklabels(avg_overall_accuracy.keys())
+plt.ylabel("Apmācības laiks (sekundes)")
+plt.grid(axis='y')
 plt.show()
+
+# AVG training duration
+# height = [mean(rfData['trainingduration']), mean(cnnData['trainingduration']), mean(svmData['trainingduration'])]
+# bars = ('RandomForest', 'CNN', 'SVM')
+# plt.barh(bars, height)
+# for index, value in enumerate(height):
+#     plt.text(value, index, str(round(value, 2)))
+# plt.xlabel('Apmācības laiks (sekundes)')
+# plt.grid(axis='x')
+# plt.show()
 
 
 # AVG overall accuracy
-height = [mean(rfData['overallAccuracy']), mean(cnnData['overallAccuracy']), mean(svmData['overallAccuracy'])]
-bars = ('RandomForest', 'CNN', 'SVM')
-plt.barh(bars, height)
-for index, value in enumerate(height):
-    plt.text(value, index, str(round(value,2)))
-plt.xlabel('Kopējā precizitāte %')
-plt.xlim([0, 100])
-plt.grid(axis='x')
-plt.show()
+# height = [mean(rfData['overallAccuracy']), mean(cnnData['overallAccuracy']), mean(svmData['overallAccuracy'])]
+# bars = ('RandomForest', 'CNN', 'SVM')
+# plt.barh(bars, height)
+# for index, value in enumerate(height):
+#     plt.text(value, index, str(round(value,2)))
+# plt.xlabel('Kopējā precizitāte %')
+# plt.xlim([0, 100])
+# plt.grid(axis='x')
+# plt.show()
+
+
+# AVG overall accuracy boxplot
+# avg_overall_accuracy = {
+#     'RandomForest': rfData['overallAccuracy'],
+#     'CNN': cnnData['overallAccuracy'],
+#     'SVM': svmData['overallAccuracy']
+# }
+#
+# fig, ax = plt.subplots()
+# ax.boxplot(avg_overall_accuracy.values(), showmeans=True, meanline=True)
+# ax.set_xticklabels(avg_overall_accuracy.keys())
+# plt.ylabel("Kopējā precizitāte %")
+# plt.grid(axis='y')
+# plt.show()
+
+
+# AVG sensitivity duration
+# metric = 'sensitivity'
+# height = [mean(rfData[metric]), mean(cnnData[metric]), mean(svmData[metric])]
+# bars = ('RandomForest', 'CNN', 'SVM')
+# plt.barh(bars, height)
+# for index, value in enumerate(height):
+#     plt.text(value, index, str(round(value, 2)))
+# plt.xlabel('Jutīgums')
+# plt.grid(axis='x')
+# plt.show()
+
+# metric = 'specificity'
+# height = [mean(rfData[metric]), mean(cnnData[metric]), mean(svmData[metric])]
+# bars = ('RandomForest', 'CNN', 'SVM')
+# plt.barh(bars, height)
+# for index, value in enumerate(height):
+#     plt.text(value, index, str(round(value, 2)))
+# plt.xlabel('Specifiskums')
+# plt.grid(axis='x')
+# plt.show()
+
+
+# metric = 'precision'
+# height = [mean(rfData[metric]), mean(cnnData[metric]), mean(svmData[metric])]
+# bars = ('RandomForest', 'CNN', 'SVM')
+# plt.barh(bars, height)
+# for index, value in enumerate(height):
+#     plt.text(value, index, str(round(value, 2)))
+# plt.xlabel('Precīzumspēja')
+# plt.grid(axis='x')
+# plt.show()
+
+
+
+# metric = 'npv'
+# height = [mean(rfData[metric]), mean(cnnData[metric]), mean(svmData[metric])]
+# bars = ('RandomForest', 'CNN', 'SVM')
+# plt.barh(bars, height)
+# for index, value in enumerate(height):
+#     plt.text(value, index, str(round(value, 2)))
+# plt.xlabel('Negatīvo atklāšanas biežums')
+# plt.grid(axis='x')
+# plt.show()
+
+
 
 
 

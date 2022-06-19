@@ -14,20 +14,32 @@ rfData = pd.read_csv(randomForestResults)
 cnnData = pd.read_csv(cnnResults)
 svmData = pd.read_csv(svmResults)
 
-# AVG overall accuracy
-overallRFAccuracy = rfData['overallAccuracy']
-overallCNNAccuracy = cnnData['overallAccuracy']
-overallSVMAccuracy = svmData['overallAccuracy']
-
-height = [mean(overallRFAccuracy), mean(overallCNNAccuracy), mean(overallSVMAccuracy)]
+# AVG training duration
+height = [mean(rfData['trainingduration']), mean(cnnData['trainingduration']), mean(svmData['trainingduration'])]
 bars = ('RandomForest', 'CNN', 'SVM')
-y_pos = np.arange(len(bars))
-# Create bars
-plt.bar(y_pos, height)
-# Create names on the x-axis
-plt.xticks(y_pos, bars)
-# Show graphic
+plt.barh(bars, height)
+for index, value in enumerate(height):
+    plt.text(value, index, str(round(value,2)))
+plt.xlabel('Apmācības laiks s')
+#plt.xlim([0, 100])
+plt.grid(axis='x')
 plt.show()
+
+
+# AVG overall accuracy
+height = [mean(rfData['overallAccuracy']), mean(cnnData['overallAccuracy']), mean(svmData['overallAccuracy'])]
+bars = ('RandomForest', 'CNN', 'SVM')
+plt.barh(bars, height)
+for index, value in enumerate(height):
+    plt.text(value, index, str(round(value,2)))
+plt.xlabel('Kopējā precizitāte %')
+plt.xlim([0, 100])
+plt.grid(axis='x')
+plt.show()
+
+
+
+
 
 # ROC curve (receiver operating characteristic curve) is a graph
 # showing the performance of a classification model at all classification thresholds.

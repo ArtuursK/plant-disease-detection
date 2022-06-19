@@ -126,18 +126,20 @@ print("The predicted image is : " + categories[model.predict(l)[0]])
 
 # OPTIONAL - Plot the ROC and AUC Curves
 
-printROC = True
-if printROC:
+printROCAUC = True
+if printROCAUC:
     y_pred_proba = model.predict_proba(x_test)[::,1]
     fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
+    auc = metrics.roc_auc_score(y_test, y_pred_proba)
+    print(f"AUC: {str(auc)}")
     # create ROC curve
     # plt.plot(fpr, tpr)
     # plt.ylabel('True Positive Rate')
     # plt.xlabel('False Positive Rate')
     # plt.show()
-    print(f"X fpr: {fpr}")
-    print(f"Y tpr: {tpr}")
-    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+    # print(f"X fpr: {fpr}")
+    # print(f"Y tpr: {tpr}")
+    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr, 'auc': auc})
     pd.DataFrame(df).to_csv("RFROC.csv", index=False)
 
 

@@ -126,10 +126,12 @@ if printROC:
     #y_pred_proba = model.predict_proba(np.array(x_test))[::, 1]
     y_pred = model.predict(x_test, batch_size=batch_size)
     y_pred = np.round(y_pred)
-    fpr, tpr, _ = metrics.roc_curve(np.array(y_test),  y_pred)
+    fpr, tpr, _ = metrics.roc_curve(np.array(y_test), y_pred)
     print(f"X fpr: {fpr}")
     print(f"Y tpr: {tpr}")
-    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+    auc = metrics.roc_auc_score(np.array(y_test), y_pred)
+    print(f"AUC: {str(auc)}")
+    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr, 'auc': auc})
     pd.DataFrame(df).to_csv("CNNROC.csv", index=False)
 
 

@@ -15,19 +15,19 @@ cnnData = pd.read_csv(cnnResults)
 svmData = pd.read_csv(svmResults)
 
 # AVG training duration
-metric = 'trainingduration'
-avg_overall_accuracy = {
-    'RandomForest': rfData[metric],
-    'CNN': cnnData[metric],
-    'SVM': svmData[metric]
-}
-
-fig, ax = plt.subplots()
-ax.boxplot(avg_overall_accuracy.values(), showmeans=True, meanline=True)
-ax.set_xticklabels(avg_overall_accuracy.keys())
-plt.ylabel("Apmācības laiks (sekundes)")
-plt.grid(axis='y')
-plt.show()
+# metric = 'trainingduration'
+# avg_overall_accuracy = {
+#     'RandomForest': rfData[metric],
+#     'CNN': cnnData[metric],
+#     'SVM': svmData[metric]
+# }
+#
+# fig, ax = plt.subplots()
+# ax.boxplot(avg_overall_accuracy.values(), showmeans=True, meanline=True)
+# ax.set_xticklabels(avg_overall_accuracy.keys())
+# plt.ylabel("Apmācības laiks (sekundes)")
+# plt.grid(axis='y')
+# plt.show()
 
 # AVG training duration
 # height = [mean(rfData['trainingduration']), mean(cnnData['trainingduration']), mean(svmData['trainingduration'])]
@@ -121,28 +121,32 @@ plt.show()
 # showing the performance of a classification model at all classification thresholds.
 # This curve plots two parameters: True Positive Rate. False Positive Rate.
 
-rffpr = [0, 0, 0, 0.16666667 0.16666667 0.33333333, 0.33333333 0.5        0.83333333 0.83333333 1.        ]
+# create ROC curves
+rfROC = pd.read_csv("../RandomForest/RFROC.csv")
+cnnROC = pd.read_csv("../CNN/CNNROC.csv")
+svmROC = pd.read_csv("../SVM/SVMROC.csv")
+plt.plot(rfROC['fpr'], rfROC['tpr'], 'r', label="RandomForest, AUC="+str(round(rfROC['auc'][0], 2)))
+plt.plot(cnnROC['fpr'], cnnROC['tpr'], 'g', label="CNN, AUC="+str(round(cnnROC['auc'][0], 2)))
+plt.plot(svmROC['fpr'], svmROC['tpr'], 'b', label="SVM, AUC="+str(round(svmROC['auc'][0], 2)))
 
-plt.plot(fpr, tpr)
-plt.ylabel('True Positive Rate')
-plt.xlabel('False Positive Rate')
+diagonalX = [0, 1]; diagonalY = [0, 1]
+plt.plot(diagonalX, diagonalY, color='gray', linestyle='dotted')
+plt.ylabel('Patieso pozitīvo koeficients (True positive rate)')
+plt.xlabel('Nepatiesi pozitīvo koeficients (False positive rate)')
+plt.legend()
 plt.show()
-# TODO: save ROC curve data
-print(f"X fpr: {fpr}")
-print(f"Y tpr: {tpr}")
 
 
 
 
 
-# plot trainingduration
-# plt.plot(rfData['trainingduration'], 'r', label='RandomForest')
-# plt.plot(cnnData['trainingduration'], 'b', label='CNN')
-# plt.plot(svmData['trainingduration'], 'g', label='SVM')
-# plt.ylabel("Kopējā precizitāte")
-# plt.xlabel("Klasifikatora numurs")
-# plt.legend()
-# plt.show()
+
+
+
+
+
+
+
 
 
 
@@ -152,6 +156,8 @@ print(f"Y tpr: {tpr}")
 
 # https://www.youtube.com/watch?v=4jRBRDbJemM&ab_channel=StatQuestwithJoshStarmer
 
+
+# https://www.analyticsvidhya.com/blog/2020/06/auc-roc-curve-machine-learning/
 
 
 

@@ -104,15 +104,10 @@ printROC = True
 if printROC:
     y_pred_proba = model.predict_proba(x_test)[::,1]
     fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
-    # create ROC curve
-    # plt.plot(fpr, tpr)
-    # plt.ylabel('True Positive Rate')
-    # plt.xlabel('False Positive Rate')
-    # plt.show()
-    print(f"X fpr: {fpr}")
-    print(f"Y tpr: {tpr}")
-    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
-    pd.DataFrame(df).to_csv("RFROC.csv", index=False)
+    auc = metrics.roc_auc_score(y_test, y_pred_proba)
+    print(f"AUC: {str(auc)}")
+    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr, 'auc': auc})
+    pd.DataFrame(df).to_csv("SVMROC.csv", index=False)
 
 # References:
 #SVM implementation in python

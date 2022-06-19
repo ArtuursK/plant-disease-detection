@@ -121,6 +121,17 @@ plt.show()
 # showing the performance of a classification model at all classification thresholds.
 # This curve plots two parameters: True Positive Rate. False Positive Rate.
 
+rffpr = [0, 0, 0, 0.16666667 0.16666667 0.33333333, 0.33333333 0.5        0.83333333 0.83333333 1.        ]
+
+plt.plot(fpr, tpr)
+plt.ylabel('True Positive Rate')
+plt.xlabel('False Positive Rate')
+plt.show()
+# TODO: save ROC curve data
+print(f"X fpr: {fpr}")
+print(f"Y tpr: {tpr}")
+
+
 
 
 

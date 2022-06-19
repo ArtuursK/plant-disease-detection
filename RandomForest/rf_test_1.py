@@ -125,26 +125,32 @@ for ind, val in enumerate(categories):
 print("The predicted image is : " + categories[model.predict(l)[0]])
 
 # OPTIONAL - Plot the ROC and AUC Curves
-y_pred_proba = model.predict_proba(x_test)[::,1]
-fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
 
-#create ROC curve
-plt.plot(fpr,tpr)
-plt.ylabel('True Positive Rate')
-plt.xlabel('False Positive Rate')
-plt.show()
+printROC = True
+if printROC:
+    y_pred_proba = model.predict_proba(x_test)[::,1]
+    fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
+    # create ROC curve
+    # plt.plot(fpr, tpr)
+    # plt.ylabel('True Positive Rate')
+    # plt.xlabel('False Positive Rate')
+    # plt.show()
+    print(f"X fpr: {fpr}")
+    print(f"Y tpr: {tpr}")
+    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+    pd.DataFrame(df).to_csv("RFROC.csv", index=False)
 
 
-y_pred_proba = model.predict_proba(x_test)[::,1]
-fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
-auc = metrics.roc_auc_score(y_test, y_pred_proba)
-
-#create AUC curve
-plt.plot(fpr,tpr,label="AUC="+str(auc))
-plt.ylabel('True Positive Rate')
-plt.xlabel('False Positive Rate')
-plt.legend(loc=4)
-plt.show()
+# y_pred_proba = model.predict_proba(x_test)[::,1]
+# fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
+# auc = metrics.roc_auc_score(y_test, y_pred_proba)
+#
+# #create AUC curve
+# plt.plot(fpr,tpr,label="AUC="+str(auc))
+# plt.ylabel('True Positive Rate')
+# plt.xlabel('False Positive Rate')
+# plt.legend(loc=4)
+# plt.show()
 
 
 

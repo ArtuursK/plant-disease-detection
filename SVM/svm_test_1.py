@@ -4,6 +4,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from datetime import datetime
+from sklearn import metrics
 
 import pandas as pd
 import os
@@ -97,6 +98,21 @@ if not os.path.exists(whereToSaveModel):
 
 pickle.dump(model, open(whereToSaveModel + "/model.p", "wb"))
 print("Model was saved successfully")
+
+
+printROC = True
+if printROC:
+    y_pred_proba = model.predict_proba(x_test)[::,1]
+    fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
+    # create ROC curve
+    # plt.plot(fpr, tpr)
+    # plt.ylabel('True Positive Rate')
+    # plt.xlabel('False Positive Rate')
+    # plt.show()
+    print(f"X fpr: {fpr}")
+    print(f"Y tpr: {tpr}")
+    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+    pd.DataFrame(df).to_csv("RFROC.csv", index=False)
 
 # References:
 #SVM implementation in python

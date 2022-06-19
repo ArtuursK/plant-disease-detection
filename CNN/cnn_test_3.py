@@ -7,6 +7,7 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Flatten, Dense
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from datetime import datetime
+from sklearn import metrics
 
 import time
 import pandas as pd
@@ -120,7 +121,16 @@ if not os.path.exists(whereToSaveModel):
 model.save(whereToSaveModel)
 print("Model was saved successfully")
 
-
+printROC = True
+if printROC:
+    #y_pred_proba = model.predict_proba(np.array(x_test))[::, 1]
+    y_pred = model.predict(x_test, batch_size=batch_size)
+    y_pred = np.round(y_pred)
+    fpr, tpr, _ = metrics.roc_curve(np.array(y_test),  y_pred)
+    print(f"X fpr: {fpr}")
+    print(f"Y tpr: {tpr}")
+    df = pd.DataFrame({'fpr': fpr, 'tpr': tpr})
+    pd.DataFrame(df).to_csv("CNNROC.csv", index=False)
 
 
 
